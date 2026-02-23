@@ -1,0 +1,7 @@
+#!/bin/sh
+# CTP/IP Guardian Gate: pre-merge-commit hook
+# Validates Causal Handshake (SYN, DATA, SEAL, FIN) and merge coherence.
+# Blocks merge if handshake incomplete or Γ too low.
+# Install: cp hooks/pre-merge-commit .git/hooks/pre-merge-commit && chmod +x .git/hooks/pre-merge-commit
+
+node "$(git rev-parse --show-toplevel)/bin/gamma-check.mjs" pre-merge

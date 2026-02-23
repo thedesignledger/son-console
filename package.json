@@ -1,0 +1,33 @@
+{
+  "name": "son-console",
+  "version": "9.0.0",
+  "description": "Self-guarding engineering kernel for the Causal Time Protocol. Wires Guardian Gates into Git hooks.",
+  "author": "\u00c9rico Lisb\u00f4a <contact@designledger.co>",
+  "license": "SEE LICENSE",
+  "repository": "github:thedesignledger/son-console",
+  "type": "module",
+  "bin": {
+    "gamma-check": "./bin/gamma-check.mjs"
+  },
+  "exports": {
+    "./physics": "./lib/physics.mjs",
+    "./guardian-gates": "./lib/guardian-gates.mjs",
+    "./lux-runtime": "./lib/lux-runtime.mjs",
+    "./crypto": "./lib/crypto.mjs",
+    "./genesis-gate": "./lib/genesis-gate.mjs"
+  },
+  "scripts": {
+    "install-hooks": "./install-hooks.sh",
+    "gamma": "node bin/gamma-check.mjs",
+    "prepare": "node bin/setup-hooks.mjs",
+    "test": "node bin/gamma-check.mjs pre-commit"
+  },
+  "keywords": [
+    "ctp-ip",
+    "causal-time",
+    "proof-of-transformation",
+    "guardian-gates",
+    "git-hooks",
+    "coherence"
+  ]
+}

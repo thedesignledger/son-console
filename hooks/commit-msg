@@ -1,0 +1,35 @@
+#!/bin/sh
+# CTP/IP Guardian Gate: commit-msg hook
+# Enforces structured IntentSig format in commit messages.
+# Rejects plain "fix bug" messages. Requires declaration of intent.
+# Install: cp hooks/commit-msg .git/hooks/commit-msg && chmod +x .git/hooks/commit-msg
+
+MSG_FILE="$1"
+MSG=$(cat "$MSG_FILE")
+
+# Check for IntentSig structure
+if echo "$MSG" | grep -q "\[INTENT\]"; then
+  # Structured format — pass through to Gamma check
+  node "$(git rev-parse --show-toplevel)/bin/gamma-check.mjs" commit-msg "$MSG_FILE"
+  exit $?
+fi
+
+# Check minimum quality: at least 10 chars describing what and why
+MSG_LEN=$(echo "$MSG" | wc -c)
+if [ "$MSG_LEN" -lt 10 ]; then
+  echo ""
+  echo "  ✗ Intent Gate FAILED: commit message too short ($MSG_LEN chars)"
+  echo ""
+  echo "  Commit messages must declare intent. Either:"
+  echo "    1. Use IntentSig format:"
+  echo "       [INTENT] What this transformation achieves"
+  echo "       [SCOPE] files/area affected"  
+  echo "       [CRITERIA] How to verify success"
+  echo ""
+  echo "    2. Or write a clear description (minimum 10 characters)"
+  echo ""
+  exit 1
+fi
+
+# Acceptable plain message — run gamma check
+node "$(git rev-parse --show-toplevel)/bin/gamma-check.mjs" commit-msg "$MSG_FILE"

@@ -1,0 +1,6 @@
+#!/bin/sh
+# CTP/IP Guardian Gate: pre-push hook
+# Full DAG validation: entropy, temporal ordering, anti-circularity, Γ re-validation.
+# Install: cp hooks/pre-push .git/hooks/pre-push && chmod +x .git/hooks/pre-push
+
+node "$(git rev-parse --show-toplevel)/bin/gamma-check.mjs" pre-push

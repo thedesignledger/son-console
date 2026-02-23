@@ -1,0 +1,6 @@
+#!/bin/sh
+# CTP/IP Guardian Gate: pre-commit hook
+# Computes Γ from staged changes. Blocks commit if Γ < 0.70.
+# Install: cp hooks/pre-commit .git/hooks/pre-commit && chmod +x .git/hooks/pre-commit
+
+node "$(git rev-parse --show-toplevel)/bin/gamma-check.mjs" pre-commit

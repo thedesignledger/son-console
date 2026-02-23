@@ -1,0 +1,62 @@
+CC BY-NC 4.0
+
+Copyright (c) 2026 The Time Foundation & Design Ledger PTY LTD
+Author: Érico Lisbôa
+
+TERMS
+
+Non-commercial use permitted with attribution.
+Commercial runtime deployment requires separate license from Design Ledger PTY LTD.
+
+COMMERCIAL LICENSING
+
+This repository contains the open-source engineering kernel of the Causal Time
+Protocol (CTP/IP). The canonical physics, Guardian Gates, and Git hook enforcement
+are freely available for inspection, research, education, and non-commercial use.
+
+Commercial deployment of CTP/IP — including but not limited to operating the LUX
+Runtime, integrating the seal pipeline into products or services, issuing ZK-TSL
+certificates, collecting fees via the CVF engine, or offering DGENCY certification
+— requires a commercial license from Design Ledger PTY LTD.
+
+To license: contact@designledger.co
+Runtime: https://designledger.co
+Standards: https://time.foundation
+
+ANTI-WEAPONIZATION NOTICE
+
+CTP/IP is designed to measure coherence — the alignment between intent and outcome
+in human transformation. It is regenerative infrastructure. It exists to validate
+genuine change, not to control, surveil, coerce, or rank human beings.
+
+The following uses are expressly prohibited under any license:
+
+  1. SURVEILLANCE: Using coherence scoring, Gamma computation, or operator
+     telemetry to monitor, profile, or score individuals without their informed
+     consent and unconditional right to opt out.
+
+  2. COERCION: Using Guardian Gates, classification thresholds, or temporal debt
+     as mechanisms of punishment, denial of service, or behavioral control.
+
+  3. WEAPONIZATION: Integrating CTP/IP into weapons systems, military targeting,
+     autonomous lethal decision-making, or any system designed to cause physical
+     harm.
+
+  4. SOCIAL CREDIT: Using coherence classification (SEED/BLOOM/ROOT) as a social
+     ranking system, credit score, employability metric, or basis for denying
+     rights, access, or opportunity.
+
+  5. EXTRACTION: Operating the protocol in a manner that extracts coherence from
+     operators rather than generating it — including systems that produce burnout,
+     compulsive engagement, or dependency.
+
+These prohibitions are non-negotiable and survive any sublicense, fork, derivative
+work, or commercial agreement. Any implementation found to violate these terms
+loses all rights under this license immediately and irrevocably.
+
+The protocol generates coherence. It does not extract it.
+The protocol validates transformation. It does not simulate it.
+The protocol measures meaning. It does not manufacture it.
+
+DOI: 10.5281/zenodo.18742628
+Canonical Corpus: The Book of Causal Time v9.0.0
