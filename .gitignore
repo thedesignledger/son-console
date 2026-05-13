@@ -144,3 +144,5 @@ vite.config.ts.timestamp-*
 oracle-keypair.json
 *.key
 *.pem
+.son/
+engine.mjs
