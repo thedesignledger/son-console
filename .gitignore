@@ -145,4 +145,3 @@ oracle-keypair.json
 *.key
 *.pem
 .son/
-engine.mjs
