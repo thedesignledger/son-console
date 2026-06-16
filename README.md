@@ -261,7 +261,7 @@ git config --global commit.gpgsign true
 
 | Layer | System | What It Does |
 |-------|--------|-------------|
-| **Law** | V9 Unified Corpus (DOI: 10.5281/zenodo.18742628) | Defines the protocol — Books I-VII, 279 pages |
+| **Law** | CTP/IP canonical corpus (DOI: 10.5281/zenodo.20652928) | Defines the protocol |
 | **Kernel** | son-console (this repo) | Proves the physics, self-guards via Git |
 | **Engine** | LUX Runtime (licensed) | Production seal pipeline, operator management, Fractal Fabric |
 | **Standards** | time.foundation | Education, certification (SEED→BLOOM→ROOT→Sovereign→Agency), research |
@@ -285,8 +285,8 @@ git config --global commit.gpgsign true
 
 ---
 
-**DOI:** 10.5281/zenodo.18742628
-**Corpus:** The Book of Causal Time v9.0.0
+**DOI:** 10.5281/zenodo.20652928
+**Corpus:** CTP/IP canonical corpus (sealed)
 **Author:** Érico Lisbôa — The Architect, Sovereign ΔGENCY ΔEON
 **Standards:** The Time Foundation (time.foundation)
 **Runtime:** Design Ledger PTY LTD (designledger.co) | ABN 50 669 856 339
