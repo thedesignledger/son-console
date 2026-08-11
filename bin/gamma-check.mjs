@@ -16,6 +16,41 @@ const EPSILON_0 = 1.0;
 const THRESHOLDS = { SEED: 0.70, BLOOM: 0.8187, ROOT: 0.95 };
 
 // ═══════════════════════════════════════════════════════
+// CALIBRATION SWITCH
+// ═══════════════════════════════════════════════════════
+// The Gamma computed in this file is NOT the canonical engine's Gamma.
+// E, V and A below are local heuristics: diff line count, regex on the
+// message, and an npm exit code. None has a closed derivation in the
+// corpus, so the result is Category 4 interpretation, not Category 1.
+// Blocking a commit on it promotes an interpretation to an operational
+// claim, which the Honest Operational Perimeter forbids.
+//
+// The calibrated path already exists: engine.mjs (SHA-256 040e14ea...,
+// the FC-1 inscribed attestation) exports evaluateEVA. This file does
+// not use it.
+//
+// Set CALIBRATED to true only when ALL of these hold:
+//   1. LUX Runtime is the sole runtime and is locked.
+//   2. This file imports evaluateEVA from ../engine.mjs instead of
+//      computing E, V and A locally.
+//   3. A closed derivation exists mapping commit context to E, V, A.
+//   4. Mainnet chains are live and first seals are anchored.
+//
+// Until then the hooks measure and report. They never block.
+const CALIBRATED = false;
+
+function gateExit(code) {
+  if (code !== 0 && !CALIBRATED) {
+    console.log(`  ${YELLOW}UNCALIBRATED: reporting only, not blocking.${RESET}`);
+    console.log(`  ${DIM}Gate re-arms when CALIBRATED = true in bin/gamma-check.mjs.${RESET}`);
+    console.log('');
+    process.exit(0);
+  }
+  process.exit(code);
+}
+
+
+// ═══════════════════════════════════════════════════════
 // Γ COMPUTATION
 // ═══════════════════════════════════════════════════════
 function computeGamma(E, V, A, tau = 0) {
@@ -382,7 +417,7 @@ function runPreCommit() {
       console.log(`  Temporal debt: ${debt.toFixed(4)} (φ × (Γ_min − Γ) × E)`);
       console.log('');
     }
-    process.exit(1);
+    gateExit(1);
   }
 }
 
@@ -395,7 +430,7 @@ function runCommitMsg(msgFile) {
     commitMsg = readFileSync(msgFile, 'utf-8').trim();
   } catch {
     console.log(`  ${RED}✗ Cannot read commit message file: ${msgFile}${RESET}`);
-    process.exit(1);
+    gateExit(1);
   }
 
   printHeader('CTP/IP Guardian Gate — commit-msg');
@@ -418,14 +453,14 @@ function runCommitMsg(msgFile) {
     console.log('    [SCOPE] Files/area affected');
     console.log('    [CRITERIA] How to verify success');
     console.log('');
-    process.exit(1);
+    gateExit(1);
   }
 
   if (!antiCirc.passed) {
     console.log(`  ${RED}✗ Anti-Circularity FAILED: ${antiCirc.value}${RESET}`);
     console.log('  Commit messages cannot reference non-existent hashes.');
     console.log('');
-    process.exit(1);
+    gateExit(1);
   }
 
   // Compute V from message
@@ -589,7 +624,7 @@ function runPrePush() {
   } else {
     console.log(`  ${RED}✗ PRE-PUSH REJECTED — fix violations before pushing${RESET}`);
     console.log('');
-    process.exit(1);
+    gateExit(1);
   }
 }
 
@@ -631,7 +666,7 @@ function runPreMerge() {
     console.log('    [SEAL] How it was verified');
     console.log('    [FIN] Result');
     console.log('');
-    process.exit(1);
+    gateExit(1);
   }
 
   // Also check: would this merge create a low-Γ parent?
@@ -648,7 +683,7 @@ function runPreMerge() {
   if (Gamma > 0 && Gamma < THRESHOLDS.SEED) {
     console.log(`  ${RED}✗ Merge would create low-Γ parent (Γ = ${Gamma.toFixed(4)})${RESET}`);
     console.log(`    Improve merge scope or evidence before merging.`);
-    process.exit(1);
+    gateExit(1);
   }
 
   console.log(`  ${GREEN}✓ Merge coherence: Γ = ${Gamma.toFixed(4)}${RESET}`);

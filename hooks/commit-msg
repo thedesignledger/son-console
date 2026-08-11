@@ -3,33 +3,51 @@
 # Enforces structured IntentSig format in commit messages.
 # Rejects plain "fix bug" messages. Requires declaration of intent.
 # Install: cp hooks/commit-msg .git/hooks/commit-msg && chmod +x .git/hooks/commit-msg
+#
+# GATE ARMING
+# The Guardian Gate reports but does not block while the Lux Runtime is
+# uncalibrated. Re-arm by setting CALIBRATED=1 here and CALIBRATED = true in
+# bin/gamma-check.mjs, once the runtime is sole running and mainnet chains
+# are live. Until then a failing gate prints its finding and exits 0.
+CALIBRATED=0
 
 MSG_FILE="$1"
 MSG=$(cat "$MSG_FILE")
 
+gate_exit() {
+  if [ "$1" -ne 0 ] && [ "$CALIBRATED" -eq 0 ]; then
+    echo "  UNCALIBRATED: reporting only, not blocking."
+    echo "  Gate re-arms when CALIBRATED=1 in hooks/commit-msg."
+    echo ""
+    exit 0
+  fi
+  exit "$1"
+}
+
 # Check for IntentSig structure
 if echo "$MSG" | grep -q "\[INTENT\]"; then
-  # Structured format — pass through to Gamma check
+  # Structured format, pass through to Gamma check
   node "$(git rev-parse --show-toplevel)/bin/gamma-check.mjs" commit-msg "$MSG_FILE"
-  exit $?
+  gate_exit $?
 fi
 
 # Check minimum quality: at least 10 chars describing what and why
 MSG_LEN=$(echo "$MSG" | wc -c)
 if [ "$MSG_LEN" -lt 10 ]; then
   echo ""
-  echo "  ✗ Intent Gate FAILED: commit message too short ($MSG_LEN chars)"
+  echo "  x Intent Gate: commit message too short ($MSG_LEN chars)"
   echo ""
   echo "  Commit messages must declare intent. Either:"
   echo "    1. Use IntentSig format:"
   echo "       [INTENT] What this transformation achieves"
-  echo "       [SCOPE] files/area affected"  
+  echo "       [SCOPE] files/area affected"
   echo "       [CRITERIA] How to verify success"
   echo ""
   echo "    2. Or write a clear description (minimum 10 characters)"
   echo ""
-  exit 1
+  gate_exit 1
 fi
 
-# Acceptable plain message — run gamma check
+# Acceptable plain message, run gamma check
 node "$(git rev-parse --show-toplevel)/bin/gamma-check.mjs" commit-msg "$MSG_FILE"
+gate_exit $?
