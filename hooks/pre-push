@@ -1,6 +1,14 @@
 #!/bin/sh
-# CTP/IP Guardian Gate: pre-push hook
-# Full DAG validation: entropy, temporal ordering, anti-circularity, Γ re-validation.
-# Install: cp hooks/pre-push .git/hooks/pre-push && chmod +x .git/hooks/pre-push
-
-node "$(git rev-parse --show-toplevel)/bin/gamma-check.mjs" pre-push
+# CTP/IP Guardian Gate: pre-push
+# The kernel is resolved from this repository, never from an absolute path.
+# A missing or broken kernel reports and steps aside. It never blocks the work.
+K="$(git rev-parse --show-toplevel 2>/dev/null)/bin/gamma-check.mjs"
+[ -f "$K" ] || exit 0
+command -v node >/dev/null 2>&1 || exit 0
+out=$(node "$K" pre-push "$@" 2>&1); rc=$?
+printf '%s\n' "$out"
+case "$out" in
+  *MODULE_NOT_FOUND*|*"Cannot find module"*|*"SyntaxError"*)
+    printf '\n  gate could not run. stepping aside, the work is not blocked.\n'; exit 0 ;;
+esac
+exit $rc

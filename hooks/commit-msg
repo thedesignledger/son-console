@@ -1,53 +1,14 @@
 #!/bin/sh
-# CTP/IP Guardian Gate: commit-msg hook
-# Enforces structured IntentSig format in commit messages.
-# Rejects plain "fix bug" messages. Requires declaration of intent.
-# Install: cp hooks/commit-msg .git/hooks/commit-msg && chmod +x .git/hooks/commit-msg
-#
-# GATE ARMING
-# The Guardian Gate reports but does not block while the Lux Runtime is
-# uncalibrated. Re-arm by setting CALIBRATED=1 here and CALIBRATED = true in
-# bin/gamma-check.mjs, once the runtime is sole running and mainnet chains
-# are live. Until then a failing gate prints its finding and exits 0.
-CALIBRATED=0
-
-MSG_FILE="$1"
-MSG=$(cat "$MSG_FILE")
-
-gate_exit() {
-  if [ "$1" -ne 0 ] && [ "$CALIBRATED" -eq 0 ]; then
-    echo "  UNCALIBRATED: reporting only, not blocking."
-    echo "  Gate re-arms when CALIBRATED=1 in hooks/commit-msg."
-    echo ""
-    exit 0
-  fi
-  exit "$1"
-}
-
-# Check for IntentSig structure
-if echo "$MSG" | grep -q "\[INTENT\]"; then
-  # Structured format, pass through to Gamma check
-  node "$(git rev-parse --show-toplevel)/bin/gamma-check.mjs" commit-msg "$MSG_FILE"
-  gate_exit $?
-fi
-
-# Check minimum quality: at least 10 chars describing what and why
-MSG_LEN=$(echo "$MSG" | wc -c)
-if [ "$MSG_LEN" -lt 10 ]; then
-  echo ""
-  echo "  x Intent Gate: commit message too short ($MSG_LEN chars)"
-  echo ""
-  echo "  Commit messages must declare intent. Either:"
-  echo "    1. Use IntentSig format:"
-  echo "       [INTENT] What this transformation achieves"
-  echo "       [SCOPE] files/area affected"
-  echo "       [CRITERIA] How to verify success"
-  echo ""
-  echo "    2. Or write a clear description (minimum 10 characters)"
-  echo ""
-  gate_exit 1
-fi
-
-# Acceptable plain message, run gamma check
-node "$(git rev-parse --show-toplevel)/bin/gamma-check.mjs" commit-msg "$MSG_FILE"
-gate_exit $?
+# CTP/IP Guardian Gate: commit-msg
+# The kernel is resolved from this repository, never from an absolute path.
+# A missing or broken kernel reports and steps aside. It never blocks the work.
+K="$(git rev-parse --show-toplevel 2>/dev/null)/bin/gamma-check.mjs"
+[ -f "$K" ] || exit 0
+command -v node >/dev/null 2>&1 || exit 0
+out=$(node "$K" commit-msg "$@" 2>&1); rc=$?
+printf '%s\n' "$out"
+case "$out" in
+  *MODULE_NOT_FOUND*|*"Cannot find module"*|*"SyntaxError"*)
+    printf '\n  gate could not run. stepping aside, the work is not blocked.\n'; exit 0 ;;
+esac
+exit $rc

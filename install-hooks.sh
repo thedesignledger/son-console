@@ -22,6 +22,8 @@ echo ""
 # Copy hooks
 for hook in pre-commit commit-msg pre-push pre-merge-commit; do
   if [ -f "$SCRIPT_DIR/hooks/$hook" ]; then
+    # Keep the kernel path repo relative. Rewriting it to an absolute path
+    # bound the hook to one machine and broke every push from anywhere else.
     cp "$SCRIPT_DIR/hooks/$hook" "$HOOKS_DIR/$hook"
     chmod +x "$HOOKS_DIR/$hook"
     echo "  ✓ Installed: $hook"
