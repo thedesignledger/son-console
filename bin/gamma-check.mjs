@@ -369,7 +369,7 @@ function runPreCommit() {
   const Gamma = computeGamma(E, V, A);
   const coherenceDeficit = 1 - Gamma;
   const classification = classify(Gamma);
-  const valid = Gamma >= THRESHOLDS.GAMMA_MIN;
+  const valid = Gamma >= THRESHOLDS.GAMMA_MIN && coherenceDeficit > 0;
   // L2796: REJECTED means no CTU generated. L4969: Gamma=0.69 gets ZERO, not 69%.
   const CTU = valid ? PHI * E * V * A : 0;
 
