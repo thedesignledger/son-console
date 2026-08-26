@@ -13,7 +13,7 @@ import { readFileSync, existsSync } from 'fs';
 // ═══════════════════════════════════════════════════════
 const PHI = 1.618033988749895;
 const EPSILON_0 = 1.0;
-const THRESHOLDS = { SEED: 0.70, BLOOM: 0.8187, ROOT: 0.95 };
+const THRESHOLDS = { GAMMA_MIN: 0.70, SEED: 0.70, BLOOM: 0.8187, ROOT: 0.95 };
 
 // ═══════════════════════════════════════════════════════
 // CALIBRATION SWITCH
@@ -367,16 +367,18 @@ function runPreCommit() {
 
   // Compute Γ
   const Gamma = computeGamma(E, V, A);
-  const deltaS = 1 - Gamma;
+  const coherenceDeficit = 1 - Gamma;
   const classification = classify(Gamma);
-  const CTU = PHI * E * V * A;
+  const valid = Gamma >= THRESHOLDS.GAMMA_MIN;
+  // L2796: REJECTED means no CTU generated. L4969: Gamma=0.69 gets ZERO, not 69%.
+  const CTU = valid ? PHI * E * V * A : 0;
 
   // Real gate checks
   const intentHash = stagedFiles.length > 0 ? sha256(stagedFiles.join(',')) : null;
   const evidence = validateEvidence(staged, stagedFiles);
   const anchor = verifyAnchor();
 
-  const gates = evaluateGates(Gamma, deltaS, intentHash, evidence, anchor, null);
+  const gates = evaluateGates(Gamma, coherenceDeficit, intentHash, evidence, anchor, null);
   const allPassed = Object.values(gates).every(g => g.passed);
 
   // Report
@@ -386,7 +388,7 @@ function runPreCommit() {
   printRow('A (Attention):', A.toFixed(4));
   console.log('  ├─ Coherence ─────────────────────────────┤');
   printRow('Γ (Gamma):', Gamma.toFixed(4));
-  printRow('ΔS (Entropy):', deltaS.toFixed(4));
+  printRow('ΔS (Entropy):', coherenceDeficit.toFixed(4));
   printRow('CTU:', CTU.toFixed(4));
   printRow('Class:', classification);
   console.log('  ├─ Five Guardian Gates ────────────────────┤');
