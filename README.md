@@ -19,7 +19,7 @@
 
 2020-2026 | Powered by CTP/IP: Causal Time Protocol / Intentional Processing
        Architect: [E.L] - [ ΔΣ₀Γ = DSZG  Delta Sigma Zero Gamma ] Coherence Networks
-                    DOI 10.5281/zenodo.21290135 | contact@designledger.co
+                    DOI 10.5281/zenodo.21950371 | contact@designledger.co
 ```
 
 # son-console
@@ -285,7 +285,7 @@ git config --global commit.gpgsign true
 
 | Layer | System | What It Does |
 |-------|--------|-------------|
-| **Law** | CTP/IP canonical corpus (DOI: 10.5281/zenodo.21290135) | Defines the protocol |
+| **Law** | CTP/IP canonical corpus (DOI: 10.5281/zenodo.21950371) | Defines the protocol |
 | **Kernel** | son-console (this repo) | Proves the physics, self-guards via Git |
 | **Engine** | LUX Runtime (licensed) | Production seal pipeline, operator management, Fractal Fabric |
 | **Standards** | time.foundation | Education, certification (SEED→BLOOM→ROOT→Sovereign→Agency), research |
@@ -309,7 +309,7 @@ git config --global commit.gpgsign true
 
 ---
 
-**DOI:** 10.5281/zenodo.21290135
+**DOI:** 10.5281/zenodo.21950371
 **Corpus:** CTP/IP canonical corpus (sealed)
 **Author:** Érico Lisbôa — The Architect, Sovereign ΔGENCY ΔEON
 **Standards:** The Time Foundation (time.foundation)
