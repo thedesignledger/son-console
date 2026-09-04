@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-// Automatic hook installation — runs on `npm install`
+// Automatic hook installation, runs on `npm install`
 // Zero dependencies. Equivalent to husky.
 
 import { execSync } from 'child_process';
@@ -17,7 +17,7 @@ if (!existsSync(gitDir)) {
     const parentRoot = execSync('git rev-parse --show-toplevel', { encoding: 'utf-8', cwd: root }).trim();
     installHooks(parentRoot);
   } catch {
-    console.log('  Not a git repository — skipping hook installation');
+    console.log('  Not a git repository, skipping hook installation');
   }
   process.exit(0);
 }
@@ -64,7 +64,7 @@ function installHooks(targetRoot) {
 
   console.log('  └─────────────────────────────────────────────┘');
   console.log('');
-  console.log('  CC BY-NC 4.0 — Non-commercial use with attribution.');
+  console.log('  CC BY-NC 4.0, Non-commercial use with attribution.');
   console.log('  Commercial deployment: license LUX at designledger.co');
   console.log('');
   console.log('  This protocol must not be used for surveillance,');

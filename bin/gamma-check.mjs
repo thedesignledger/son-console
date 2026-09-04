@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 // son-console/bin/gamma-check.mjs
-// CTP/IP Guardian Gate CLI — computes Γ from Git context
+// CTP/IP Guardian Gate CLI, computes Γ from Git context
 // Called by Git hooks to enforce protocol physics at commit/push/merge time.
 // Authority: The Book of Causal Time v9.0.0
 
@@ -9,7 +9,7 @@ import { createHash } from 'crypto';
 import { readFileSync, existsSync } from 'fs';
 
 // ═══════════════════════════════════════════════════════
-// CANONICAL CONSTANTS — Book I §I.6-I.7
+// CANONICAL CONSTANTS, Book I §I.6-I.7
 // ═══════════════════════════════════════════════════════
 const PHI = 1.618033988749895;
 const EPSILON_0 = 1.0;
@@ -69,7 +69,7 @@ function sha256(text) {
 }
 
 // ═══════════════════════════════════════════════════════
-// E (ENERGY) — from diff magnitude
+// E (ENERGY), from diff magnitude
 // ═══════════════════════════════════════════════════════
 function computeE(staged) {
   if (!staged) return 0;
@@ -82,7 +82,7 @@ function computeE(staged) {
 }
 
 // ═══════════════════════════════════════════════════════
-// V (VECTOR) — from intent-to-scope alignment
+// V (VECTOR), from intent-to-scope alignment
 // ═══════════════════════════════════════════════════════
 function computeV(commitMsg, stagedFiles) {
   if (!commitMsg || commitMsg.trim().length === 0) return 0;
@@ -111,7 +111,7 @@ function computeV(commitMsg, stagedFiles) {
 }
 
 // ═══════════════════════════════════════════════════════
-// A (ATTENTION) — from evidence quality
+// A (ATTENTION), from evidence quality
 // ═══════════════════════════════════════════════════════
 function computeA() {
   let a = 0.5; // base: staged and ready to commit
@@ -138,7 +138,7 @@ function computeA() {
 }
 
 // ═══════════════════════════════════════════════════════
-// ANCHOR VERIFICATION — real check, not rubber stamp
+// ANCHOR VERIFICATION, real check, not rubber stamp
 // Git author must have a GPG/SSH signed identity OR be
 // listed in .son/operators (sovereign operator registry)
 // ═══════════════════════════════════════════════════════
@@ -173,28 +173,28 @@ function verifyAnchor() {
     const name = execSync('git config --get user.name', { encoding: 'utf-8' }).trim();
     const email = execSync('git config --get user.email', { encoding: 'utf-8' }).trim();
     if (name && email) {
-      return { passed: true, value: `${name} <${email}>`, method: 'identity', warning: 'unsigned — GPG/SSH recommended' };
+      return { passed: true, value: `${name} <${email}>`, method: 'identity', warning: 'unsigned, GPG/SSH recommended' };
     }
   } catch { }
 
-  return { passed: false, value: 'NO IDENTITY — configure git user.name and user.email', method: 'none' };
+  return { passed: false, value: 'NO IDENTITY, configure git user.name and user.email', method: 'none' };
 }
 
 // ═══════════════════════════════════════════════════════
-// EVIDENCE VALIDATION — real hash check
+// EVIDENCE VALIDATION, real hash check
 // Evidence = SHA-256 of staged diff content
 // Must be non-empty and 64-char hex
 // ═══════════════════════════════════════════════════════
 function validateEvidence(staged, stagedFiles) {
   if (!staged || staged.trim().length === 0) {
-    return { passed: false, hash: null, value: 'NO DIFF — zero-change commits invalid' };
+    return { passed: false, hash: null, value: 'NO DIFF, zero-change commits invalid' };
   }
   if (!stagedFiles || stagedFiles.length === 0) {
-    return { passed: false, hash: null, value: 'NO FILES — nothing staged' };
+    return { passed: false, hash: null, value: 'NO FILES, nothing staged' };
   }
   const hash = sha256(staged);
   if (hash.length !== 64) {
-    return { passed: false, hash, value: 'HASH INVALID — evidence corrupt' };
+    return { passed: false, hash, value: 'HASH INVALID, evidence corrupt' };
   }
   return { passed: true, hash, value: `${hash.slice(0, 16)}... (${stagedFiles.length} files)` };
 }
@@ -216,9 +216,9 @@ function checkAntiCircularity(commitMsg) {
   for (const ref of matches) {
     try {
       execSync(`git cat-file -t ${ref} 2>/dev/null`, { stdio: 'pipe' });
-      // Hash exists — this is a valid back-reference, allowed
+      // Hash exists, this is a valid back-reference, allowed
     } catch {
-      // Hash does NOT exist in repo — forward reference = circularity violation
+      // Hash does NOT exist in repo, forward reference = circularity violation
       return { passed: false, value: `CIRCULAR: references non-existent hash ${ref.slice(0, 12)}...` };
     }
   }
@@ -226,7 +226,7 @@ function checkAntiCircularity(commitMsg) {
 }
 
 // ═══════════════════════════════════════════════════════
-// FIVE GUARDIAN GATES — all real, no rubber stamps
+// FIVE GUARDIAN GATES, all real, no rubber stamps
 // ═══════════════════════════════════════════════════════
 function evaluateGates(gamma, deltaS, intentHash, evidence, anchor, antiCirc) {
   return {
@@ -256,7 +256,7 @@ function evaluateGates(gamma, deltaS, intentHash, evidence, anchor, antiCirc) {
 }
 
 // ═══════════════════════════════════════════════════════
-// DAG RE-VALIDATION — for pre-push
+// DAG RE-VALIDATION, for pre-push
 // Re-computes Γ for every commit in the push range
 // ═══════════════════════════════════════════════════════
 function validateDAG(range) {
@@ -304,7 +304,7 @@ function validateDAG(range) {
 }
 
 // ═══════════════════════════════════════════════════════
-// CAUSAL HANDSHAKE VALIDATION — for pre-merge-commit
+// CAUSAL HANDSHAKE VALIDATION, for pre-merge-commit
 // PR/merge must follow SYN → DATA → SEAL → FIN
 // ═══════════════════════════════════════════════════════
 function validateCausalHandshake(mergeMsg) {
@@ -351,7 +351,7 @@ function printRow(label, value, width = 36) {
 // MODE: PRE-COMMIT
 // ═══════════════════════════════════════════════════════
 function runPreCommit() {
-  printHeader('CTP/IP Guardian Gate — pre-commit');
+  printHeader('CTP/IP Guardian Gate, pre-commit');
 
   // Gather context
   let staged = '', stagedFiles = [];
@@ -402,21 +402,21 @@ function runPreCommit() {
   console.log('');
 
   if (allPassed) {
-    console.log(`  ${GREEN}✓ ALL GATES PASSED — ${classification} transformation${RESET}`);
+    console.log(`  ${GREEN}✓ ALL GATES PASSED, ${classification} transformation${RESET}`);
     if (evidence.hash) console.log(`  ${DIM}Evidence: ${evidence.hash.slice(0, 32)}...${RESET}`);
     console.log(`  ${DIM}CC BY-NC 4.0 | Commercial: designledger.co | No weaponization${RESET}`);
     console.log('');
     process.exit(0);
   } else {
     const failed = Object.entries(gates).filter(([_, g]) => !g.passed);
-    console.log(`  ${RED}✗ GATES FAILED — transformation REJECTED${RESET}`);
+    console.log(`  ${RED}✗ GATES FAILED, transformation REJECTED${RESET}`);
     for (const [name, gate] of failed) {
       console.log(`    → ${name}: ${gate.value}`);
     }
     console.log('');
     if (Gamma < THRESHOLDS.SEED) {
       const debt = PHI * (THRESHOLDS.SEED - Gamma) * E;
-      console.log(`  Temporal debt: ${debt.toFixed(4)} (φ × (Γ_min − Γ) × E)`);
+      console.log(`  Temporal debt: ${debt.toFixed(4)} (φ × (Γ_min - Γ) × E)`);
       console.log('');
     }
     gateExit(1);
@@ -435,7 +435,7 @@ function runCommitMsg(msgFile) {
     gateExit(1);
   }
 
-  printHeader('CTP/IP Guardian Gate — commit-msg');
+  printHeader('CTP/IP Guardian Gate, commit-msg');
 
   // IntentSig structure check
   const hasIntent = /\[INTENT\]/.test(commitMsg);
@@ -480,9 +480,9 @@ function runCommitMsg(msgFile) {
   console.log('');
 
   if (structured) {
-    console.log(`  ${GREEN}✓ Intent Gate PASSED — structured IntentSig${RESET}`);
+    console.log(`  ${GREEN}✓ Intent Gate PASSED, structured IntentSig${RESET}`);
   } else {
-    console.log(`  ${YELLOW}○ Intent Gate PASSED — plain message accepted (V = ${V.toFixed(2)})${RESET}`);
+    console.log(`  ${YELLOW}○ Intent Gate PASSED, plain message accepted (V = ${V.toFixed(2)})${RESET}`);
     console.log(`  ${DIM}  Tip: structured IntentSig raises V → raises Γ → higher classification${RESET}`);
   }
   console.log('');
@@ -490,10 +490,10 @@ function runCommitMsg(msgFile) {
 }
 
 // ═══════════════════════════════════════════════════════
-// MODE: PRE-PUSH — full DAG validation
+// MODE: PRE-PUSH, full DAG validation
 // ═══════════════════════════════════════════════════════
 function runPrePush() {
-  printHeader('CTP/IP Guardian Gate — pre-push');
+  printHeader('CTP/IP Guardian Gate, pre-push');
 
   const input = readFileSync('/dev/stdin', 'utf-8').trim();
   if (!input) {
@@ -518,7 +518,7 @@ function runPrePush() {
     console.log(`  Branch: ${branch}`);
     console.log('');
 
-    // Gate 1: Entropy — no empty commits
+    // Gate 1: Entropy, no empty commits
     let emptyFound = false;
     try {
       const shas = execSync(`git log ${range} --format="%H" 2>/dev/null`, { encoding: 'utf-8' })
@@ -530,7 +530,7 @@ function runPrePush() {
           const parents = execSync(`git rev-list --parents -n 1 ${sha}`, { encoding: 'utf-8' }).trim().split(' ');
           if (parents.length <= 2) { // not a merge
             console.log(`  ${RED}✗ Entropy Gate FAILED: empty commit ${sha.slice(0, 8)}${RESET}`);
-            console.log(`    ΔS must be > 0 — zero-change transformations invalid`);
+            console.log(`    ΔS must be > 0, zero-change transformations invalid`);
             emptyFound = true;
           }
         }
@@ -540,7 +540,7 @@ function runPrePush() {
     if (emptyFound) { allPassed = false; continue; }
     console.log(`  ${GREEN}✓${RESET} Entropy gate:    No empty commits`);
 
-    // Gate 2: Temporal — no future timestamps
+    // Gate 2: Temporal, no future timestamps
     let futureFound = false;
     try {
       const now = Math.floor(Date.now() / 1000);
@@ -558,7 +558,7 @@ function runPrePush() {
     if (futureFound) { allPassed = false; continue; }
     console.log(`  ${GREEN}✓${RESET} Temporal gate:   All timestamps valid`);
 
-    // Gate 3: Anti-circularity — no self-referencing commit messages
+    // Gate 3: Anti-circularity, no self-referencing commit messages
     let circularFound = false;
     try {
       const entries = execSync(`git log ${range} --format="%H|||%s" 2>/dev/null`, { encoding: 'utf-8' })
@@ -590,7 +590,7 @@ function runPrePush() {
     if (circularFound) { allPassed = false; continue; }
     console.log(`  ${GREEN}✓${RESET} Anti-circularity: No self-referencing commits`);
 
-    // Gate 4: DAG coherence — re-validate Γ across all commits in range
+    // Gate 4: DAG coherence, re-validate Γ across all commits in range
     console.log('');
     console.log('  ┌─ DAG Coherence Scan ──────────────────────┐');
     const dag = validateDAG(range);
@@ -624,17 +624,17 @@ function runPrePush() {
     console.log('');
     process.exit(0);
   } else {
-    console.log(`  ${RED}✗ PRE-PUSH REJECTED — fix violations before pushing${RESET}`);
+    console.log(`  ${RED}✗ PRE-PUSH REJECTED, fix violations before pushing${RESET}`);
     console.log('');
     gateExit(1);
   }
 }
 
 // ═══════════════════════════════════════════════════════
-// MODE: PRE-MERGE-COMMIT — Causal Handshake
+// MODE: PRE-MERGE-COMMIT, Causal Handshake
 // ═══════════════════════════════════════════════════════
 function runPreMerge() {
-  printHeader('CTP/IP Guardian Gate — pre-merge');
+  printHeader('CTP/IP Guardian Gate, pre-merge');
 
   // Read merge message
   let mergeMsg = '';
