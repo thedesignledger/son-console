@@ -14,10 +14,10 @@ This repository contains the open-source engineering kernel of the Causal Time
 Protocol (CTP/IP). The canonical physics, Guardian Gates, and Git hook enforcement
 are freely available for inspection, research, education, and non-commercial use.
 
-Commercial deployment of CTP/IP — including but not limited to operating the LUX
+Commercial deployment of CTP/IP, including but not limited to operating the LUX
 Runtime, integrating the seal pipeline into products or services, issuing ZK-TSL
 certificates, collecting fees via the CVF engine, or offering DGENCY certification
-— requires a commercial license from Design Ledger PTY LTD.
+- requires a commercial license from Design Ledger PTY LTD.
 
 To license: contact@designledger.co
 Runtime: https://designledger.co
@@ -25,7 +25,7 @@ Standards: https://time.foundation
 
 ANTI-WEAPONIZATION NOTICE
 
-CTP/IP is designed to measure coherence — the alignment between intent and outcome
+CTP/IP is designed to measure coherence, the alignment between intent and outcome
 in human transformation. It is regenerative infrastructure. It exists to validate
 genuine change, not to control, surveil, coerce, or rank human beings.
 
@@ -47,7 +47,7 @@ The following uses are expressly prohibited under any license:
      rights, access, or opportunity.
 
   5. EXTRACTION: Operating the protocol in a manner that extracts coherence from
-     operators rather than generating it — including systems that produce burnout,
+     operators rather than generating it, including systems that produce burnout,
      compulsive engagement, or dependency.
 
 These prohibitions are non-negotiable and survive any sublicense, fork, derivative
@@ -58,5 +58,5 @@ The protocol generates coherence. It does not extract it.
 The protocol validates transformation. It does not simulate it.
 The protocol measures meaning. It does not manufacture it.
 
-DOI: 10.5281/zenodo.18742628
+DOI: 10.5281/zenodo.21950371
 Canonical Corpus: The Book of Causal Time v9.0.0

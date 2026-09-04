@@ -10,4 +10,4 @@ Any single test failure falsifies the implementation, not the protocol.
 | 4 | Future timestamp | REJECTED | pre-push |
 | 5 | E = 0 → Γ = 0 | REJECTED | pre-commit |
 | 6 | w_AI > 0 in authorship | REJECTED | GitHub Actions |
-| 7 | Failed transformation → debt recorded | φ × (Γ_min − Γ) × E | pre-commit |
+| 7 | Failed transformation → debt recorded | φ × (Γ_min - Γ) × E | pre-commit |

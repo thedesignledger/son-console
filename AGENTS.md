@@ -1,5 +1,5 @@
-# CTP/IP Protocol Rules for Cursor IDE
-# son-console v9.0.0 | DOI: 10.5281/zenodo.18742628
+# CTP/IP Protocol Rules for any agent working in this repository
+# son-console v9.0.0 | DOI: 10.5281/zenodo.21950371
 # Authority: The Book of Causal Time (V9 Unified Corpus)
 # Author: Érico Lisbôa | The Time Foundation & Design Ledger PTY LTD
 
@@ -21,12 +21,12 @@ These values are defined in lib/physics.mjs. Never approximate. Never round. Nev
 
 ```
 PHI          = 1.618033988749895        (Book I §I.6.2)
-LAMBDA_LUX   = 8.987551787368177e16    (Book I §I.6.1 — c²)
+LAMBDA_LUX   = 8.987551787368177e16    (Book I §I.6.1, c²)
 EPSILON_0    = 1.0                      (Book I §I.7.1)
 GAMMA_MIN    = 0.70                     (SEED threshold)
-GAMMA_BLOOM  = 0.8187                   (BLOOM threshold — Landauer limit)
+GAMMA_BLOOM  = 0.8187                   (BLOOM threshold, Landauer limit)
 GAMMA_ROOT   = 0.95                     (ROOT threshold)
-FEE_RATE     = 0.135                    (13.5% CVF — commercial layer only)
+FEE_RATE     = 0.095                    (9.5% Cycle Validation Fee, protocol level)
 ```
 
 ## Canonical Formulas
@@ -91,15 +91,15 @@ If you see these in code, flag them immediately. If asked to write them, refuse.
 ## Architecture: son-console vs LUX Runtime
 
 son-console is the OPEN kernel. It contains:
-- lib/physics.mjs — canonical Gamma, CTU, EVA, thresholds
-- lib/guardian-gates.mjs — Five Guardian Gates
-- lib/lux-runtime.mjs — client-side LUX surface (metric computation, violation detection)
-- lib/crypto.mjs — SHA-256 hashing (IntentSig, evidence, seals)
-- lib/genesis-gate.mjs — Genesis Seal, CausalAnchor binding
-- hooks/ — Git lifecycle enforcement (4 hooks)
-- bin/gamma-check.mjs — Guardian Gate engine (all modes)
-- bin/setup-hooks.mjs — auto-install on npm install
-- .github/workflows/ — LUX validation on PRs
+- lib/physics.mjs, canonical Gamma, CTU, EVA, thresholds
+- lib/guardian-gates.mjs, Five Guardian Gates
+- lib/lux-runtime.mjs, client-side LUX surface (metric computation, violation detection)
+- lib/crypto.mjs, SHA-256 hashing (IntentSig, evidence, seals)
+- lib/genesis-gate.mjs, Genesis Seal, CausalAnchor binding
+- hooks/, Git lifecycle enforcement (4 hooks)
+- bin/gamma-check.mjs, Guardian Gate engine (all modes)
+- bin/setup-hooks.mjs, auto-install on npm install
+- .github/workflows/, LUX validation on PRs
 
 LUX Runtime is the COMMERCIAL product (designledger.co). It contains the full seal pipeline, operator profiles, Fractal Fabric DAG, ZK-TSL certificates, ΔGENCY certification, Stripe CVF, and sector infrastructure. LUX is NOT in this repo. Do not attempt to implement LUX features here.
 
@@ -169,7 +169,7 @@ When explaining code or adding comments, cite the canonical source:
 - AI Boundary: Book I §I.11
 - ΔGENCY certification: Book III Part A §III.A.5
 
-DOI: 10.5281/zenodo.18742628
+DOI: 10.5281/zenodo.21950371
 GitHub: https://github.com/thedesignledger/son-console
 License: CC BY-NC 4.0
 

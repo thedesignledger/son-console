@@ -32,11 +32,11 @@ The repo doesn't just implement the protocol. It *is* the protocol.
 
 ---
 
-## What This Is — and What It Isn't
+## What This Is, and What It Isn't
 
 **son-console is the open-source kernel.** It contains the canonical physics (Γ computation, CTU generation, thresholds, EVA evaluation), the Five Guardian Gates, and Git hook enforcement. Anyone can clone it, inspect the equations, verify the protocol, and use it to self-guard their own repos. The falsification tests are published. The protocol is verifiable.
 
-**LUX Runtime is the commercial product.** LUX is the full orchestration engine — the production seal pipeline, operator profiles, Fractal Fabric DAG, ZK-TSL certificates, ΔGENCY certification, Stripe CVF, telemetry channels, and sector deployment infrastructure. LUX is built on the physics defined here but is licensed separately through Design Ledger PTY LTD.
+**LUX Runtime is the commercial product.** LUX is the full orchestration engine, the production seal pipeline, operator profiles, Fractal Fabric DAG, ZK-TSL certificates, ΔGENCY certification, Stripe CVF, telemetry channels, and sector deployment infrastructure. LUX is built on the physics defined here but is licensed separately through Design Ledger PTY LTD.
 
 ```
 ┌─────────────────────────────────────────────────────┐
@@ -178,7 +178,7 @@ Developer writes code
 
 ## Canonical Physics
 
-From `lib/physics.mjs` — the constants that both son-console and LUX Runtime build on.
+From `lib/physics.mjs`, the constants that both son-console and LUX Runtime build on.
 
 | Constant | Value | Source |
 |----------|-------|--------|
@@ -204,11 +204,11 @@ From `lib/physics.mjs` — the constants that both son-console and LUX Runtime b
 | Anchors | pre-commit | GPG/SSH key or .son/operators registry | Blocked (warning if unsigned) |
 
 Plus:
-- **Temporal ordering** (pre-push) — no future timestamps
-- **Anti-circularity** (commit-msg + pre-push) — no self-referencing or forward hash references
-- **DAG Γ re-validation** (pre-push) — re-computes Γ for every commit in push range
-- **Causal Handshake** (pre-merge-commit) — SYN/DATA/SEAL/FIN on merge
-- **Merge Γ check** (pre-merge-commit) — blocks low-coherence merge parents
+- **Temporal ordering** (pre-push), no future timestamps
+- **Anti-circularity** (commit-msg + pre-push), no self-referencing or forward hash references
+- **DAG Γ re-validation** (pre-push), re-computes Γ for every commit in push range
+- **Causal Handshake** (pre-merge-commit), SYN/DATA/SEAL/FIN on merge
+- **Merge Γ check** (pre-merge-commit), blocks low-coherence merge parents
 
 ---
 
@@ -300,7 +300,7 @@ git config --global commit.gpgsign true
 
 ## License
 
-**son-console** is licensed under CC BY-NC 4.0 — non-commercial use with attribution.
+**son-console** is licensed under CC BY-NC 4.0, non-commercial use with attribution.
 
 
 **LUX Runtime** commercial deployment requires a separate license from Design Ledger PTY LTD.
@@ -311,6 +311,6 @@ git config --global commit.gpgsign true
 
 **DOI:** 10.5281/zenodo.21950371
 **Corpus:** CTP/IP canonical corpus (sealed)
-**Author:** Érico Lisbôa — The Architect, Sovereign ΔGENCY ΔEON
+**Author:** Érico Lisbôa, The Architect, Sovereign ΔGENCY ΔEON
 **Standards:** The Time Foundation (time.foundation)
 **Runtime:** Design Ledger PTY LTD (designledger.co) | ABN 50 669 856 339

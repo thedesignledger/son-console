@@ -1,6 +1,6 @@
-# CTP/IP Git Telemetry Runtime — Book III §E.2
+# CTP/IP Git Telemetry Runtime, Book III §E.2
 # Second line of defense: GitHub Actions validates what hooks enforce locally.
-# 
+#
 # Git hooks = Guardian Gates (local, pre-commit)
 # GitHub Actions = LUX Runtime (remote, on PR)
 # Commit DAG = Fractal Fabric (permanent record)
@@ -52,10 +52,10 @@ jobs:
           PR_TITLE="${{ github.event.pull_request.title }}"
           PR_BODY="${{ github.event.pull_request.body }}"
           if [ ${#PR_TITLE} -lt 5 ]; then
-            echo "✗ Intent Gate: PR title too short — declare your intent"
+            echo "✗ Intent Gate: PR title too short, declare your intent"
             exit 1
           fi
-          echo "✓ V: Intent declared — $PR_TITLE"
+          echo "✓ V: Intent declared, $PR_TITLE"
 
       - name: "Gate 4: Attention (evidence quality)"
         run: |
@@ -64,12 +64,12 @@ jobs:
       - name: "Gate 5: Anti-Circularity"
         run: |
           AUTHOR=$(git log -1 --format="%ae")
-          echo "✓ Author: $AUTHOR — not self-reviewing (enforced by GitHub branch protection)"
+          echo "✓ Author: $AUTHOR, not self-reviewing (enforced by GitHub branch protection)"
 
       - name: "Summary"
         run: |
           echo ""
           echo "╔══════════════════════════════════════════╗"
-          echo "║  CTP/IP LUX Runtime — All Gates Passed    ║"
+          echo "║  CTP/IP LUX Runtime, All Gates Passed    ║"
           echo "╚══════════════════════════════════════════╝"
           echo ""

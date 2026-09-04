@@ -15,7 +15,7 @@ fi
 
 echo ""
 echo "  ╔══════════════════════════════════════════════════════════╗"
-echo "  ║  CTP/IP Guardian Gate Installation — son-console v9.0.0 ║"
+echo "  ║  CTP/IP Guardian Gate Installation, son-console v9.0.0 ║"
 echo "  ╚══════════════════════════════════════════════════════════╝"
 echo ""
 
@@ -54,7 +54,7 @@ echo "  pre-merge-commit  Causal Handshake (SYN, DATA, SEAL, FIN)"
 echo ""
 echo "  ┌─ LICENSE ────────────────────────────────────────────────┐"
 echo "  │                                                          │"
-echo "  │  CC BY-NC 4.0 — Non-commercial use with attribution.    │"
+echo "  │  CC BY-NC 4.0, Non-commercial use with attribution.    │"
 echo "  │  Commercial deployment requires LUX Runtime license.     │"
 echo "  │  License LUX: contact@designledger.co                    │"
 echo "  │                                                          │"
