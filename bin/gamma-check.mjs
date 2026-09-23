@@ -17,7 +17,7 @@ const { PHI, THRESHOLDS, computeGamma, classify } = engine;
 // ═══════════════════════════════════════════════════════
 // GATE MODE
 // ═══════════════════════════════════════════════════════
-// Γ is computed by engine.mjs, the inscribed engine; this file only derives
+// Γ is computed by engine.mjs, the canonical engine; this file only derives
 // E, V and A from Git context. That derivation (diff size, message structure,
 // the repository's own tests) is a local heuristic with no closed derivation in
 // the corpus, so its Γ is Category 4 interpretation. Blocking a commit on an

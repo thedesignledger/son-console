@@ -1,10 +1,10 @@
 #!/usr/bin/env node
 // eva.mjs . the engine bridge, and nothing else.
 //
-// The only job here is to reach the inscribed engine rather than restate it.
+// The only job here is to reach the canonical engine rather than restate it.
 // gamma-check.mjs computes E, V and A locally and says so in its own header;
 // this file does not compute physics at all. It reads three observables and
-// hands them to evaluateEVA from engine.mjs, the inscribed engine.
+// hands them to evaluateEVA from engine.mjs, the canonical engine.
 //
 //   node bin/eva.mjs <E> <V> <A> [tau]
 //
@@ -37,7 +37,7 @@ try {
 
 process.stdout.write(JSON.stringify({
   engine: ENGINE_VERSION,
-  source: 'engine.mjs evaluateEVA, the inscribed engine',
+  source: 'engine.mjs evaluateEVA, the canonical engine',
   inputs: { E, V, A, tau },
   gamma: r.Gamma,
   coherenceDeficit: r.coherenceDeficit,
