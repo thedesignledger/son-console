@@ -47,7 +47,8 @@ function installHooks(targetRoot) {
   if (existsSync(binSrc) && targetRoot !== root) {
     mkdirSync(join(targetRoot, 'bin'), { recursive: true });
     copyFileSync(binSrc, binDest);
-    console.log('  │  ✓ gamma-check.mjs copied                   │');
+    copyFileSync(join(root, 'engine.mjs'), join(targetRoot, 'bin', 'engine.mjs'));
+    console.log('  │  ✓ gamma-check.mjs and engine.mjs copied    │');
   }
 
   // Create operator registry
@@ -55,14 +56,13 @@ function installHooks(targetRoot) {
   mkdirSync(sonDir, { recursive: true });
   const opsFile = join(sonDir, 'operators');
   if (!existsSync(opsFile)) {
-    try {
-      const email = execSync('git config --get user.email', { encoding: 'utf-8' }).trim();
-      writeFileSync(opsFile, email + '\n');
-      console.log('  │  ✓ .son/operators created                    │');
-    } catch { }
+    // Registering an operator is a deliberate, reviewed act, never automatic.
+    writeFileSync(opsFile, '# One email per line.\n');
+    console.log('  │  ✓ .son/operators created, empty             │');
   }
 
   console.log('  └─────────────────────────────────────────────┘');
+  console.log('  ADVISORY mode. Enforce with: git config ctpip.gates enforce');
   console.log('');
   console.log('  CC BY-NC 4.0, Non-commercial use with attribution.');
   console.log('  Commercial deployment: license LUX at designledger.co');

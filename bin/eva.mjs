@@ -4,8 +4,7 @@
 // The only job here is to reach the inscribed engine rather than restate it.
 // gamma-check.mjs computes E, V and A locally and says so in its own header;
 // this file does not compute physics at all. It reads three observables and
-// hands them to evaluateEVA from engine.mjs, whose SHA-256 is the one inscribed
-// on chain at Solana slot 419,487,383.
+// hands them to evaluateEVA from engine.mjs, the inscribed engine.
 //
 //   node bin/eva.mjs <E> <V> <A> [tau]
 //
@@ -17,20 +16,24 @@
 import { SonConsole, ENGINE_VERSION } from '../engine.mjs';
 
 const [, , e, v, a, t] = process.argv;
-const num = (x, d) => {
-  const n = Number(x);
-  return Number.isFinite(n) ? Math.max(0, Math.min(1, n)) : d;
-};
 
 if (e === undefined) {
   console.error('usage: node bin/eva.mjs <E> <V> <A> [tau]');
   process.exit(2);
 }
 
-const E = num(e, 0), V = num(v, 0), A = num(a, 0);
-const tau = Number.isFinite(Number(t)) ? Number(t) : 0;
+// Inputs are refused when outside their domain, never clamped: a clamp would
+// hand the engine a number the adapter never measured.
+const E = Number(e), V = Number(v), A = Number(a);
+const tau = t === undefined ? 0 : Number(t);
 
-const r = SonConsole.physics.evaluateEVA(E, V, A, tau);
+let r;
+try {
+  r = SonConsole.physics.evaluateEVA(E, V, A, tau);
+} catch (err) {
+  console.error(err.message);
+  process.exit(2);
+}
 
 process.stdout.write(JSON.stringify({
   engine: ENGINE_VERSION,

@@ -1,5 +1,5 @@
 # CTP/IP Protocol Rules for any agent working in this repository
-# son-console v9.0.0 | DOI: 10.5281/zenodo.21950371
+# son-console 10.0.0 | DOI: 10.5281/zenodo.21950371
 # Authority: The Book of Causal Time (V9 Unified Corpus)
 # Author: Érico Lisbôa | The Time Foundation & Design Ledger PTY LTD
 

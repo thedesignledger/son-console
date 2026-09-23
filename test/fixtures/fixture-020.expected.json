@@ -1,0 +1,18 @@
+{
+ "fixture_id": "fixture-020",
+ "description": "Edge case: Γ = 0.7008 (just above threshold)",
+ "expected_scalars": {
+  "E": 0.85,
+  "V": 0.85,
+  "A": 0.97,
+  "tau": 0.0
+ },
+ "lambda_reg": 1.0,
+ "expected_gamma": 0.700825,
+ "expected_gamma_printed": "0.7008250000",
+ "expected_classification": "SEED",
+ "expected_verdict": "VALID",
+ "expected_ctu": 1.134,
+ "tolerance": 1e-09,
+ "source": "CTP/IP Corpus D1, Appendix M, sections M.4.2, M.5.2 and M.6.1"
+}

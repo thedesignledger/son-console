@@ -1,0 +1,18 @@
+{
+ "fixture_id": "fixture-010",
+ "description": "Genesis seal (Human Agency's first cycle, simulated)",
+ "expected_scalars": {
+  "E": 0.99,
+  "V": 0.98,
+  "A": 0.96,
+  "tau": 0.0
+ },
+ "lambda_reg": 1.0,
+ "expected_gamma": 0.931392,
+ "expected_gamma_printed": "0.9313920000",
+ "expected_classification": "BLOOM",
+ "expected_verdict": "VALID",
+ "expected_ctu": 1.507,
+ "tolerance": 1e-09,
+ "source": "CTP/IP Corpus D1, Appendix M, sections M.4.2, M.5.2 and M.6.1"
+}

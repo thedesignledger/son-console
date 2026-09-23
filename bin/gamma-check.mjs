@@ -1,67 +1,60 @@
 #!/usr/bin/env node
 // son-console/bin/gamma-check.mjs
-// CTP/IP Guardian Gate CLI, computes Γ from Git context
-// Called by Git hooks to enforce protocol physics at commit/push/merge time.
-// Authority: The Book of Causal Time v9.0.0
+// CTP/IP Guardian Gate CLI: computes Γ from Git context through the canonical
+// engine and reports the Five Guardian Gates at commit, push and merge time.
+// In ENFORCE mode a failed gate blocks; in ADVISORY mode it is reported only.
+// Authority: CTP/IP Corpus D1
 
 import { execSync } from 'child_process';
 import { createHash } from 'crypto';
 import { readFileSync, existsSync } from 'fs';
+// The engine sits beside the repository root in son-console itself, and beside
+// this file where install-hooks.sh has copied both into another repository.
+const engine = await import(new URL('../engine.mjs', import.meta.url))
+  .catch(() => import(new URL('./engine.mjs', import.meta.url)));
+const { PHI, THRESHOLDS, computeGamma, classify } = engine;
 
 // ═══════════════════════════════════════════════════════
-// CANONICAL CONSTANTS, Book I §I.6-I.7
+// GATE MODE
 // ═══════════════════════════════════════════════════════
-const PHI = 1.618033988749895;
-const EPSILON_0 = 1.0;
-const THRESHOLDS = { GAMMA_MIN: 0.70, SEED: 0.70, BLOOM: 0.8187, ROOT: 0.95 };
-
-// ═══════════════════════════════════════════════════════
-// CALIBRATION SWITCH
-// ═══════════════════════════════════════════════════════
-// The Gamma computed in this file is NOT the canonical engine's Gamma.
-// E, V and A below are local heuristics: diff line count, regex on the
-// message, and an npm exit code. None has a closed derivation in the
-// corpus, so the result is Category 4 interpretation, not Category 1.
-// Blocking a commit on it promotes an interpretation to an operational
-// claim, which the Honest Operational Perimeter forbids.
+// Γ is computed by engine.mjs, the inscribed engine; this file only derives
+// E, V and A from Git context. That derivation (diff size, message structure,
+// the repository's own tests) is a local heuristic with no closed derivation in
+// the corpus, so its Γ is Category 4 interpretation. Blocking a commit on an
+// interpretation would promote it to an operational claim, which the Honest
+// Operational Perimeter forbids. The mode is therefore explicit:
 //
-// The calibrated path already exists: engine.mjs (SHA-256 040e14ea...,
-// the FC-1 inscribed attestation) exports evaluateEVA. This file does
-// not use it.
+//   ADVISORY  measures and reports every gate; exits 0. The default for this
+//             Git adapter.
+//   ENFORCE   a failed gate, or a kernel that cannot run, exits non-zero and
+//             blocks the operation. Selected per repository or per run:
+//               git config ctpip.gates enforce
+//               CTPIP_GATES=enforce git commit ...
 //
-// Set CALIBRATED to true only when ALL of these hold:
-//   1. LUX Runtime is the sole runtime and is locked.
-//   2. This file imports evaluateEVA from ../engine.mjs instead of
-//      computing E, V and A locally.
-//   3. A closed derivation exists mapping commit context to E, V, A.
-//   4. Mainnet chains are live and first seals are anchored.
-//
-// Until then the hooks measure and report. They never block.
-const CALIBRATED = false;
+// The mode is printed on every run, so an advisory result is never mistaken
+// for an enforced one.
+function resolveMode() {
+  let mode = process.env.CTPIP_GATES || '';
+  if (!mode) {
+    try { mode = execSync('git config --get ctpip.gates', { encoding: 'utf-8', stdio: ['ignore', 'pipe', 'ignore'] }).trim(); } catch { }
+  }
+  mode = (mode || 'advisory').toLowerCase();
+  if (mode !== 'advisory' && mode !== 'enforce') {
+    console.log(`  unknown gate mode "${mode}": use advisory or enforce`);
+    process.exit(2);
+  }
+  return mode;
+}
+const MODE = resolveMode();
 
 function gateExit(code) {
-  if (code !== 0 && !CALIBRATED) {
-    console.log(`  ${YELLOW}UNCALIBRATED: reporting only, not blocking.${RESET}`);
-    console.log(`  ${DIM}Gate re-arms when CALIBRATED = true in bin/gamma-check.mjs.${RESET}`);
+  if (code !== 0 && MODE === 'advisory') {
+    console.log(`  ${YELLOW}ADVISORY MODE: reported, not enforced.${RESET}`);
+    console.log(`  ${DIM}Enforce with: git config ctpip.gates enforce${RESET}`);
     console.log('');
     process.exit(0);
   }
   process.exit(code);
-}
-
-
-// ═══════════════════════════════════════════════════════
-// Γ COMPUTATION
-// ═══════════════════════════════════════════════════════
-function computeGamma(E, V, A, tau = 0) {
-  return (E * V * A) / (tau + EPSILON_0);
-}
-
-function classify(gamma) {
-  if (gamma >= THRESHOLDS.ROOT) return 'ROOT';
-  if (gamma >= THRESHOLDS.BLOOM) return 'BLOOM';
-  if (gamma >= THRESHOLDS.SEED) return 'SEED';
-  return 'REJECTED';
 }
 
 function sha256(text) {
@@ -143,41 +136,34 @@ function computeA() {
 // listed in .son/operators (sovereign operator registry)
 // ═══════════════════════════════════════════════════════
 function verifyAnchor() {
-  // Method 1: GPG/SSH signed commits configured
-  try {
-    const signingKey = execSync('git config --get user.signingkey 2>/dev/null', { encoding: 'utf-8' }).trim();
-    if (signingKey) return { passed: true, value: `GPG: ${signingKey.slice(0, 8)}...`, method: 'gpg' };
-  } catch { }
+  const git = (key) => {
+    try { return execSync(`git config --get ${key}`, { encoding: 'utf-8', stdio: ['ignore', 'pipe', 'ignore'] }).trim(); } catch { return ''; }
+  };
+  // Methods 1 and 2: every commit is signed, with a GPG or SSH key. Git itself
+  // refuses a commit it cannot sign, so the anchor is proved by key control.
+  if (git('commit.gpgsign') === 'true') {
+    const key = git('user.signingkey');
+    if (git('gpg.format') === 'ssh' && key) return { passed: true, value: 'SSH signing active', method: 'ssh' };
+    if (key) return { passed: true, value: `GPG: ${key.slice(0, 8)}...`, method: 'gpg' };
+  }
 
-  // Method 2: SSH signing configured
+  // Method 3: the operator is listed in .son/operators, the repository's
+  // sovereign operator registry, committed and reviewed like any other file.
+  const email = git('user.email');
   try {
-    const sshSign = execSync('git config --get gpg.format 2>/dev/null', { encoding: 'utf-8' }).trim();
-    if (sshSign === 'ssh') return { passed: true, value: 'SSH signing active', method: 'ssh' };
-  } catch { }
-
-  // Method 3: Operator listed in .son/operators
-  try {
-    const email = execSync('git config --get user.email', { encoding: 'utf-8' }).trim();
     const root = execSync('git rev-parse --show-toplevel', { encoding: 'utf-8' }).trim();
     const operatorsPath = `${root}/.son/operators`;
-    if (existsSync(operatorsPath)) {
-      const operators = readFileSync(operatorsPath, 'utf-8');
-      if (operators.includes(email)) {
-        return { passed: true, value: `registered: ${email}`, method: 'registry' };
-      }
+    if (email && existsSync(operatorsPath)) {
+      const operators = readFileSync(operatorsPath, 'utf-8').split('\n').map((l) => l.trim());
+      if (operators.includes(email)) return { passed: true, value: `registered: ${email}`, method: 'registry' };
     }
   } catch { }
 
-  // Method 4: Git author identity exists (minimum viable anchor)
-  try {
-    const name = execSync('git config --get user.name', { encoding: 'utf-8' }).trim();
-    const email = execSync('git config --get user.email', { encoding: 'utf-8' }).trim();
-    if (name && email) {
-      return { passed: true, value: `${name} <${email}>`, method: 'identity', warning: 'unsigned, GPG/SSH recommended' };
-    }
-  } catch { }
-
-  return { passed: false, value: 'NO IDENTITY, configure git user.name and user.email', method: 'none' };
+  // A git user.name and user.email are metadata, not proof of key control.
+  if (email) {
+    return { passed: false, value: 'UNSIGNED IDENTITY', method: 'identity', warning: 'enable commit signing or register in .son/operators' };
+  }
+  return { passed: false, value: 'NO IDENTITY', method: 'none' };
 }
 
 // ═══════════════════════════════════════════════════════
@@ -340,6 +326,7 @@ function printHeader(title) {
   console.log('  ╔══════════════════════════════════════════╗');
   console.log(`  ║     ${title.padEnd(37)}║`);
   console.log('  ╚══════════════════════════════════════════╝');
+  console.log(`  mode: ${MODE === 'enforce' ? 'ENFORCE' : 'ADVISORY'}`);
   console.log('');
 }
 

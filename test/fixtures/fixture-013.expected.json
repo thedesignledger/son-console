@@ -1,0 +1,14 @@
+{
+ "fixture_id": "fixture-013",
+ "description": "Commits with revoked CausalAnchor",
+ "expected_scalars": null,
+ "lambda_reg": 1.0,
+ "expected_gamma": null,
+ "expected_gamma_printed": null,
+ "expected_classification": "REJECTED",
+ "expected_verdict": "INVALID",
+ "expected_ctu": 0,
+ "tolerance": 1e-09,
+ "source": "CTP/IP Corpus D1, Appendix M, sections M.4.2, M.5.2 and M.6.1",
+ "note": "Gate 3 fail: revoked CausalAnchor; rejected before the engine fires"
+}

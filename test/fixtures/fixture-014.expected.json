@@ -1,0 +1,18 @@
+{
+ "fixture_id": "fixture-014",
+ "description": "Commits unrelated to declared IntentSig (V near zero)",
+ "expected_scalars": {
+  "E": 0.85,
+  "V": 0.1,
+  "A": 0.8,
+  "tau": 0.0
+ },
+ "lambda_reg": 1.0,
+ "expected_gamma": 0.068,
+ "expected_gamma_printed": "0.0680000000",
+ "expected_classification": "REJECTED",
+ "expected_verdict": "INVALID",
+ "expected_ctu": 0,
+ "tolerance": 1e-09,
+ "source": "CTP/IP Corpus D1, Appendix M, sections M.4.2, M.5.2 and M.6.1"
+}

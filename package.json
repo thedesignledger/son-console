@@ -1,7 +1,7 @@
 {
   "name": "ctpip-engine",
-  "version": "9.0.0",
-  "description": "Self-guarding engineering kernel for the Causal Time Protocol. Wires Guardian Gates into Git hooks.",
+  "version": "10.0.0",
+  "description": "The canonical CTP/IP engine in one hashed file, and the Guardian Gates for Git hooks.",
   "author": "[E.L] ΔΣ₀Γ,CTP/IP Architect <contact@designledger.co>",
   "license": "SEE LICENSE",
   "repository": "github:thedesignledger/son-console",
@@ -21,7 +21,7 @@
     "install-hooks": "./install-hooks.sh",
     "gamma": "node bin/gamma-check.mjs",
     "prepare": "node bin/setup-hooks.mjs",
-    "test": "node bin/gamma-check.mjs pre-commit"
+    "test": "node --test \"test/*.test.mjs\""
   },
   "keywords": [
     "ctp-ip",
@@ -30,5 +30,8 @@
     "guardian-gates",
     "git-hooks",
     "coherence"
-  ]
+  ],
+  "engines": {
+    "node": ">=22"
+  }
 }

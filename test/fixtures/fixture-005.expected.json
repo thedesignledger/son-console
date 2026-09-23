@@ -1,0 +1,18 @@
+{
+ "fixture_id": "fixture-005",
+ "description": "Refactor that preserves all tests, removes 30% LOC",
+ "expected_scalars": {
+  "E": 0.95,
+  "V": 0.96,
+  "A": 0.95,
+  "tau": 0.0
+ },
+ "lambda_reg": 1.0,
+ "expected_gamma": 0.8664,
+ "expected_gamma_printed": "0.8664000000",
+ "expected_classification": "BLOOM",
+ "expected_verdict": "VALID",
+ "expected_ctu": 1.402,
+ "tolerance": 1e-09,
+ "source": "CTP/IP Corpus D1, Appendix M, sections M.4.2, M.5.2 and M.6.1"
+}

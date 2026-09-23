@@ -1,14 +1,20 @@
 #!/bin/sh
 # CTP/IP Guardian Gate: pre-push
 # The kernel is resolved from this repository, never from an absolute path.
-# A missing or broken kernel reports and steps aside. It never blocks the work.
+# ADVISORY mode (the default): a missing or broken kernel reports and steps aside.
+# ENFORCE mode (git config ctpip.gates enforce): it blocks, because a gate that
+# cannot run has not passed.
+mode="${CTPIP_GATES:-$(git config --get ctpip.gates 2>/dev/null)}"
+fail() {
+  if [ "$mode" = "enforce" ]; then printf '\n  %s. ENFORCE mode: blocked.\n' "$1"; exit 1; fi
+  printf '\n  %s. ADVISORY mode: stepping aside, the work is not blocked.\n' "$1"; exit 0
+}
 K="$(git rev-parse --show-toplevel 2>/dev/null)/bin/gamma-check.mjs"
-[ -f "$K" ] || exit 0
-command -v node >/dev/null 2>&1 || exit 0
+[ -f "$K" ] || fail "gate kernel not found"
+command -v node >/dev/null 2>&1 || fail "node not found"
 out=$(node "$K" pre-push "$@" 2>&1); rc=$?
 printf '%s\n' "$out"
 case "$out" in
-  *MODULE_NOT_FOUND*|*"Cannot find module"*|*"SyntaxError"*)
-    printf '\n  gate could not run. stepping aside, the work is not blocked.\n'; exit 0 ;;
+  *MODULE_NOT_FOUND*|*"Cannot find module"*|*"SyntaxError"*) fail "gate could not run" ;;
 esac
 exit $rc
