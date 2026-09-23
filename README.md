@@ -306,6 +306,8 @@ Runs the twenty fixtures of Corpus D1 Appendix M (Γ to 1e-9, class, verdict, ct
 sha256sum engine.mjs
 ```
 
+The engine inscribed on chain is commit `206545a`, `engine.mjs` SHA-256 `040e14ea0a11ec3565f7994e6b5ae7054b67194438c0cc5fa551d38fc98880f1` (FC-1, Solana slot 419,487,383). The corpus reproduces its twenty fixtures against that commit (Appendix M section M.7). This release computes the same Γ, class, verdict and ctu on all twenty.
+
 ---
 
 ## Production Architecture
