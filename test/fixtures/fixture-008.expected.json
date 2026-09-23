@@ -1,0 +1,18 @@
+{
+ "fixture_id": "fixture-008",
+ "description": "Architecture decision document + implementation, both committed",
+ "expected_scalars": {
+  "E": 0.97,
+  "V": 0.98,
+  "A": 0.99,
+  "tau": 0.0
+ },
+ "lambda_reg": 1.0,
+ "expected_gamma": 0.941094,
+ "expected_gamma_printed": "0.9410940000",
+ "expected_classification": "BLOOM",
+ "expected_verdict": "VALID",
+ "expected_ctu": 1.523,
+ "tolerance": 1e-09,
+ "source": "CTP/IP Corpus D1, Appendix M, sections M.4.2, M.5.2 and M.6.1"
+}

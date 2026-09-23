@@ -1,0 +1,18 @@
+{
+ "fixture_id": "fixture-006",
+ "description": "Architectural change with full test rewrite, all tests pass",
+ "expected_scalars": {
+  "E": 0.93,
+  "V": 0.97,
+  "A": 0.93,
+  "tau": 0.0
+ },
+ "lambda_reg": 1.0,
+ "expected_gamma": 0.838953,
+ "expected_gamma_printed": "0.8389530000",
+ "expected_classification": "BLOOM",
+ "expected_verdict": "VALID",
+ "expected_ctu": 1.357,
+ "tolerance": 1e-09,
+ "source": "CTP/IP Corpus D1, Appendix M, sections M.4.2, M.5.2 and M.6.1"
+}

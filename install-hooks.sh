@@ -15,7 +15,7 @@ fi
 
 echo ""
 echo "  ╔══════════════════════════════════════════════════════════╗"
-echo "  ║  CTP/IP Guardian Gate Installation, son-console v9.0.0 ║"
+echo "  ║  CTP/IP Guardian Gate Installation, son-console v10.0.0║"
 echo "  ╚══════════════════════════════════════════════════════════╝"
 echo ""
 
@@ -30,22 +30,24 @@ for hook in pre-commit commit-msg pre-push pre-merge-commit; do
   fi
 done
 
-# Copy bin
+# Copy the kernel and the engine it computes Γ with
 mkdir -p "$TARGET/bin"
 if [ -f "$SCRIPT_DIR/bin/gamma-check.mjs" ]; then
   cp "$SCRIPT_DIR/bin/gamma-check.mjs" "$TARGET/bin/gamma-check.mjs"
-  echo "  ✓ Installed: bin/gamma-check.mjs"
+  cp "$SCRIPT_DIR/engine.mjs" "$TARGET/bin/engine.mjs"
+  echo "  ✓ Installed: bin/gamma-check.mjs, bin/engine.mjs"
 fi
 
 # Create .son directory for operator registry
 mkdir -p "$TARGET/.son"
 if [ ! -f "$TARGET/.son/operators" ]; then
-  git config --get user.email >> "$TARGET/.son/operators" 2>/dev/null || true
-  echo "  ✓ Created: .son/operators (anchor registry)"
+  printf '%s\n' "# One email per line. Registering an operator is a deliberate, reviewed act." > "$TARGET/.son/operators"
+  echo "  ✓ Created: .son/operators (anchor registry, empty until an operator is registered)"
 fi
 
 echo ""
-echo "  Guardian Gates active. All four hooks enforced."
+echo "  Guardian Gates installed in ADVISORY mode: every gate is measured and reported."
+echo "  Enforce them in this repository with: git config ctpip.gates enforce"
 echo ""
 echo "  pre-commit        Coherence (Γ ≥ 0.70) + Evidence + Anchors"
 echo "  commit-msg        Intent (IntentSig) + Anti-Circularity"

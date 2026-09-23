@@ -1,0 +1,18 @@
+{
+ "fixture_id": "fixture-004",
+ "description": "Feature implementation with sustained coherent commits over 4 hours",
+ "expected_scalars": {
+  "E": 0.92,
+  "V": 0.94,
+  "A": 0.96,
+  "tau": 0.0
+ },
+ "lambda_reg": 1.0,
+ "expected_gamma": 0.830208,
+ "expected_gamma_printed": "0.8302080000",
+ "expected_classification": "BLOOM",
+ "expected_verdict": "VALID",
+ "expected_ctu": 1.343,
+ "tolerance": 1e-09,
+ "source": "CTP/IP Corpus D1, Appendix M, sections M.4.2, M.5.2 and M.6.1"
+}

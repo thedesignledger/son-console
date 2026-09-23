@@ -7,10 +7,22 @@
 
 name: CTP/IP LUX Runtime Validation
 on:
+  push:
+    branches: [main]
   pull_request:
     branches: [main]
 
 jobs:
+  engine-tests:
+    name: Engine, fixtures, TKDF-256, anchors, gates
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - run: npm test
+
   guardian-gates:
     name: Guardian Gate Check
     runs-on: ubuntu-latest
@@ -21,21 +33,21 @@ jobs:
 
       - uses: actions/setup-node@v4
         with:
-          node-version: '20'
+          node-version: '22'
 
       - name: "Gate 1: Canonical Constants"
         run: |
           echo "Verifying canonical constants..."
           # PHI
-          grep -r "1.618033988749895" lib/ || (echo "✗ PHI missing or wrong" && exit 1)
+          grep "1.618033988749895" engine.mjs || (echo "✗ PHI missing or wrong" && exit 1)
           echo "✓ PHI = 1.618033988749895"
           # EPSILON_0
-          grep -r "EPSILON_0 = 1.0" lib/ || grep -r "EPSILON_0 = 1;" lib/ || (echo "✗ EPSILON_0 wrong" && exit 1)
+          grep "EPSILON_0 = 1.0" engine.mjs || (echo "✗ EPSILON_0 wrong" && exit 1)
           echo "✓ EPSILON_0 = 1.0"
           # Thresholds
-          grep -r "0.70" lib/ || (echo "✗ SEED threshold missing" && exit 1)
-          grep -r "0.8187" lib/ || (echo "✗ BLOOM threshold missing" && exit 1)
-          grep -r "0.95" lib/ || (echo "✗ ROOT threshold missing" && exit 1)
+          grep "0.70" engine.mjs || (echo "✗ SEED threshold missing" && exit 1)
+          grep "0.8187" engine.mjs || (echo "✗ BLOOM threshold missing" && exit 1)
+          grep "0.95" engine.mjs || (echo "✗ ROOT threshold missing" && exit 1)
           echo "✓ Thresholds: SEED=0.70, BLOOM=0.8187, ROOT=0.95"
 
       - name: "Gate 2: Energy (diff magnitude)"

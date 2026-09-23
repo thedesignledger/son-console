@@ -1,5 +1,5 @@
 {
-  description = "CTP/IP Son Console Kernel v9.0.0 - Deterministic Build";
+  description = "CTP/IP son-console 10.0.0, the canonical engine, deterministic build";
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-25.11";
     flake-utils.url = "github:numtide/flake-utils";
@@ -9,16 +9,16 @@
     flake-utils.lib.eachDefaultSystem (system:
       let
         pkgs = nixpkgs.legacyPackages.${system};
-        nodejs = pkgs.nodejs_20;
-        npm = pkgs.nodejs_20.pkgs.npm;
+        nodejs = pkgs.nodejs_22;
+        npm = pkgs.nodejs_22.pkgs.npm;
         
         # Expected canonical SHA-256 of engine.mjs
-        expectedSha256 = "040e14ea0a11ec3565f7994e6b5ae7054b67194438c0cc5fa551d38fc98880f1";
+        expectedSha256 = "8ef255239ab6471c107601ffcc03e4b05dc0103fe76494b86f330747b0c0831e";
       in
       {
         packages.engine = pkgs.stdenv.mkDerivation {
           pname = "son-console-engine";
-          version = "9.0.0";
+          version = "10.0.0";
           src = ./.;
           
           buildInputs = [ nodejs npm ];
@@ -64,7 +64,7 @@
         devShells.default = pkgs.mkShell {
           buildInputs = [ nodejs npm ];
           shellHook = ''
-            echo "CTP/IP Son Console Kernel v9.0.0 Development Shell"
+            echo "CTP/IP son-console 10.0.0 development shell"
             echo "Canonical formula: Γ = (E × V × A) / (τ + ε₀)"
             echo "Node.js: $(node --version)"
             echo "npm: $(npm --version)"

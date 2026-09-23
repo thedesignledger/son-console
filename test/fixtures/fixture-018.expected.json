@@ -1,0 +1,18 @@
+{
+ "fixture_id": "fixture-018",
+ "description": "Sustained drift cycle (high deviation)",
+ "expected_scalars": {
+  "E": 0.9,
+  "V": 0.92,
+  "A": 0.88,
+  "tau": 0.65
+ },
+ "lambda_reg": 1.0,
+ "expected_gamma": 0.4416,
+ "expected_gamma_printed": "0.4416000000",
+ "expected_classification": "REJECTED",
+ "expected_verdict": "INVALID",
+ "expected_ctu": 0,
+ "tolerance": 1e-09,
+ "source": "CTP/IP Corpus D1, Appendix M, sections M.4.2, M.5.2 and M.6.1"
+}
