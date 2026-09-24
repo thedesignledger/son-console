@@ -29,7 +29,7 @@ YvxS7U37b5369xzNXt1EEuXjEkp65Ngcq9NsGUr3bmZ
 
 # POLARIS . son-console
 
-Read this before touching anything in this repository. It is the boot file of the repository, the role a CLAUDE.md or AGENTS.md plays elsewhere, named POLARIS.md under the Architect's ruling of 4 September 2026 that all naming goes to Polaris. It says what the repository is and points at the law; it restates no rule.
+Read this before touching anything in this repository. It is the boot file of the repository, the file an agent reads before any command, named POLARIS.md under the Architect's ruling of 4 September 2026 that all naming goes to Polaris. It says what the repository is and points at the law; it restates no rule.
 
 ## Authority chain
 
