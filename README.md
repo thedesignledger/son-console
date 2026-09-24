@@ -34,7 +34,7 @@ The repo doesn't just implement the protocol. It *is* the protocol.
 
 ## What This Is, and What It Isn't
 
-**son-console is the open-source kernel.** It contains the canonical engine, `engine.mjs`: one file holding the physics (Γ, CTU, thresholds, EVA), TKDF-256, the seal derivation, the Genesis Seal and CausalAnchor, and the Guardian Gate predicate, so its SHA-256 covers every line of protocol logic. Around it sit the Five Guardian Gates and the Git hooks. Anyone can clone it, inspect the equations, verify the protocol, and use it to self-guard their own repos. The falsification tests are published. The protocol is verifiable.
+**son-console is the open-source kernel.** It contains the canonical engine, `engine.mjs`: one file holding the physics (Γ, ctu, thresholds, the evaluation), TKDF-256, the seal derivation, the Genesis Seal and CausalAnchor, and the Guardian Gate predicate, so its SHA-256 covers every line of protocol logic. Around it sit the Five Guardian Gates and the Git hooks. Anyone can clone it, inspect the equations, verify the protocol, and use it to self-guard their own repos. The falsification tests are published. The protocol is verifiable.
 
 **LUX Runtime is the commercial product.** LUX is the full orchestration engine, the production seal pipeline, operator profiles, Fractal Fabric DAG, ZK-TSL certificates, ΔGENCY certification, Stripe CVF, telemetry channels, and sector deployment infrastructure. LUX is built on the physics defined here but is licensed separately through Design Ledger PTY LTD.
 
@@ -57,7 +57,7 @@ The repo doesn't just implement the protocol. It *is* the protocol.
 │  ├── Fractal Fabric DAG                             │
 │  ├── ZK-TSL certificate generation                  │
 │  ├── ΔGENCY certification (Phases 0-4)              │
-│  ├── Stripe CVF (13.5% platform fee)                │
+│  ├── CVF, 9.5 percent of validated emission         │
 │  ├── Telemetry channels (E, V, A)                   │
 │  └── Sector deployments (AI, Education, Finance,    │
 │       Gaming, Governance, Science)                   │
@@ -306,7 +306,7 @@ Runs the twenty fixtures of Corpus D1 Appendix M (Γ to 1e-9, class, verdict, ct
 sha256sum engine.mjs
 ```
 
-The engine inscribed on chain is commit `206545a`, `engine.mjs` SHA-256 `040e14ea0a11ec3565f7994e6b5ae7054b67194438c0cc5fa551d38fc98880f1` (FC-1, Solana slot 419,487,383). The corpus reproduces its twenty fixtures against that commit (Appendix M section M.7). This release computes the same Γ, class, verdict and ctu on all twenty.
+The engine inscribed on chain is commit `206545a` of this repository, `engine.mjs` SHA-256 `040e14ea0a11ec3565f7994e6b5ae7054b67194438c0cc5fa551d38fc98880f1` (FC-1, Solana slot 419,487,383). The corpus reproduces its twenty fixtures against that commit (Appendix M section M.7). This release, 10.0.0, is a different file with a different hash; it computes the same Γ, class, verdict and ctu on all twenty, and `npm test` proves it. The inscribed engine itself is held byte for byte at `Production/sdks/son-console` and vendored by every importer on the estate (`vendor/ctpip-engine`, guarded by hash on every build). Do not present this release's hash as the inscribed one.
 
 ---
 
@@ -317,13 +317,15 @@ The engine inscribed on chain is commit `206545a`, `engine.mjs` SHA-256 `040e14e
 | **Law** | CTP/IP canonical corpus (DOI: 10.5281/zenodo.21950371) | Defines the protocol |
 | **Kernel** | son-console (this repo) | Proves the physics, self-guards via Git |
 | **Engine** | LUX Runtime (licensed) | Production seal pipeline, operator management, Fractal Fabric |
-| **Standards** | time.foundation | Education, certification (SEED→BLOOM→ROOT→Sovereign→Agency), research |
+| **Standards** | time.foundation | Education, certification (SEED, BLOOM, ROOT), research |
 | **Runtime** | designledger.co | Commercial operator platform, ΔGENCY certification, sector deployments |
 | **Proof** | sovereign-mesh-proof | Working dashboard, CausalGraph, coherence-gated messaging |
 
 **To inspect the physics:** clone this repo.
-**To operate as an institution:** license LUX through designledger.co.
-**To certify as an operator:** apply through time.foundation.
+**To operate commercially:** the LUX Runtime licence, through designledger.co.
+**To certify:** apply through time.foundation.
+
+Boot file for any agent working here: `POLARIS.md`. The law it points at: `Production/polaris/RULINGS.md`.
 
 ---
 
@@ -340,6 +342,6 @@ The engine inscribed on chain is commit `206545a`, `engine.mjs` SHA-256 `040e14e
 
 **DOI:** 10.5281/zenodo.21950371
 **Corpus:** CTP/IP canonical corpus (sealed)
-**Author:** Érico Lisbôa, The Architect, Sovereign ΔGENCY ΔEON
+**Author:** Érico Lisbôa, the Architect
 **Standards:** The Time Foundation (time.foundation)
 **Runtime:** Design Ledger PTY LTD (designledger.co) | ABN 50 669 856 339
