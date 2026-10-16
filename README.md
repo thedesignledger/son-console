@@ -24,7 +24,7 @@
 
 # son-console
 
-**Self-guarding engineering kernel for the Causal Time Protocol.**
+**Self-guarding engineering kernel for the Causal Time Protocol / Intentional Processing.**
 
 The repo doesn't just implement the protocol. It *is* the protocol.
 
@@ -85,12 +85,12 @@ From `lib/physics.mjs`, the constants that both son-console and LUX Runtime buil
 |----------|-------|--------|
 | φ (PHI) | 1.618033988749895 | Book I §I.6.2 |
 | Λ_L (LAMBDA_LUX) | 8.987551787368177 × 10¹⁶ | Book I §I.6.1 |
-| ε₀ (EPSILON_0) | 1.0 | Book I §I.7.1 |
+| λ_reg (EPSILON_0) | 1.0 | Book I §I.7.1 |
 | Γ_min (SEED) | 0.70 | Book I §I.7.2 |
 | Γ_B (BLOOM) | 0.8187 | Book I §I.7.2 |
 | Γ_R (ROOT) | 0.95 | Book I §I.7.2 |
 
-**Γ = (E × V × A) / (τ + ε₀)**
+**Γ = (E × V × A) / (τ + λ_reg)**
 
 ---
 
@@ -168,4 +168,4 @@ Boot file for any agent working here: `POLARIS.md`. The law it points at: `Produ
 **Corpus:** CTP/IP canonical corpus (sealed)
 **Author:** Érico Lisbôa, the Architect
 **Standards:** The Time Foundation (time.foundation)
-**Runtime:** Design Ledger (designledger.co) | ABN 50 669 856 339
+**Runtime:** Design Ledger (designledger.co)

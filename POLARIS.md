@@ -19,7 +19,7 @@
 
 2020-2026 | CTP/IP: Causal Time Protocol / Intentional Processing
 Intellectual property of The Time Foundation. Patent enforced.
-Licensed through Design Ledger Pty Ltd (ABN 50 669 856 339).
+Licensed through Design Ledger.
 Sole author: Erico Lisboa [E.L].
 Free for personal study and research. Commercial use requires prior
 authorisation under the applicable system patents and copyright.
