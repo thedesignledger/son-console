@@ -40,23 +40,22 @@ Read this before touching anything in this repository. It is the boot file of th
 
 ## What this repository is
 
-The engineering kernel of CTP/IP as a standalone repository: `engine.mjs`, one hashed file holding the physics (Γ, ctu, thresholds, evaluation), TKDF-256, the seal derivation, the Genesis Seal and CausalAnchor, and the Guardian Gate predicate; `lib/` re-exporting it; the Five Guardian Gates as four Git hooks; the Appendix M fixtures and the falsification tests. This is release 10.0.0. The engine inscribed on chain is commit `206545a` of this repository, engine.mjs sha256 `040e14ea0a11ec3565f7994e6b5ae7054b67194438c0cc5fa551d38fc98880f1` (FC-1, Solana mainnet slot 419,487,383); `Production/sdks/son-console` holds that engine byte for byte and every importer on the estate vendors it. This release computes the same Γ, class, verdict and ctu on all twenty fixtures, and says so in its own test.
+The engineering kernel of CTP/IP as a standalone repository: `engine.mjs`, one hashed file holding the physics (Γ, ctu, thresholds, evaluation), TKDF-256, the seal derivation, the Genesis Seal and CausalAnchor, and the Guardian Gate predicate; `lib/` re-exporting it; the Appendix M fixtures and the falsification tests. This is release 10.0.0. The engine inscribed on chain is commit `206545a` of this repository, engine.mjs sha256 `040e14ea0a11ec3565f7994e6b5ae7054b67194438c0cc5fa551d38fc98880f1` (FC-1, Solana mainnet slot 419,487,383); `Production/sdks/son-console` holds that engine byte for byte and every importer on the estate vendors it. This release computes the same Γ, class, verdict and ctu on all twenty fixtures, and says so in its own test.
 
 ## Stack
 
-Node 18 or later, ES modules, no dependency. `npm install` installs the hooks through the prepare script; `./install-hooks.sh <repo>` installs them anywhere.
+Node 18 or later, ES modules, no dependency.
 
 ## Build and verify
 
-    npm test                       twenty Appendix M fixtures at 1e-9, section M.3.1 bounds, nine TKDF-256 vectors, the seal derivation, the CausalAnchor, the Genesis calibration state, the Git gates end to end
+    npm test                       twenty Appendix M fixtures at 1e-9, section M.3.1 bounds, nine TKDF-256 vectors, the seal derivation, the CausalAnchor, the Genesis calibration state
     sha256sum engine.mjs           the hash of all protocol logic in this release
     node bin/eva.mjs 0.9 0.95 0.92 0    the engine bridge: observables in, verdict out, nothing enforced
 
-The hooks run in ADVISORY mode by default: they measure and report, the work proceeds. `git config ctpip.gates enforce` blocks on a failed gate. The E, V and A the Git adapter computes from a diff, a message and the evidence facts are the DC0 mapping specified in `Production/sdks/adapters/git/ADAPTER.md`.
 
 ## Vocabulary of this repository
 
-The commit message is the IntentSig: `[INTENT]`, `[SCOPE]`, `[CRITERIA]`. The merge message is the Causal Handshake: `[SYN]`, `[DATA]`, `[SEAL]`, `[FIN]`. The terms retired by the corpus (TIME Protocol, Emergent Time Protocol, BTM, Coherence Scalar, KALI Runtime, AION Runtime, Fractal Ledger, ZK-PoT) are refused in code and copy; the protocol vocabulary itself is declared in RULINGS.md and not restated here.
+The terms retired by the corpus (TIME Protocol, Emergent Time Protocol, BTM, Coherence Scalar, KALI Runtime, AION Runtime, Fractal Ledger, ZK-PoT) are refused in code and copy; the protocol vocabulary itself is declared in RULINGS.md and not restated here.
 
 ## Do not touch
 

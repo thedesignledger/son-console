@@ -6,9 +6,6 @@
   "license": "SEE LICENSE",
   "repository": "github:thedesignledger/son-console",
   "type": "module",
-  "bin": {
-    "gamma-check": "./bin/gamma-check.mjs"
-  },
   "exports": {
     ".": "./engine.mjs",
     "./physics": "./lib/physics.mjs",
@@ -18,9 +15,6 @@
     "./genesis-gate": "./lib/genesis-gate.mjs"
   },
   "scripts": {
-    "install-hooks": "./install-hooks.sh",
-    "gamma": "node bin/gamma-check.mjs",
-    "prepare": "node bin/setup-hooks.mjs",
     "test": "node --test \"test/*.test.mjs\""
   },
   "keywords": [
